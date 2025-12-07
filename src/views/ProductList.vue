@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue'
-import { useProductsStore } from '@/stores/products'
 import type { Product } from '@/types'
+import { storeToRefs } from 'pinia'
+import { useProductsStore } from '@/stores/products'
 import { fetchProducts } from '@/services/productService'
 import VirtualScroller from '@/components/VirtualScroller.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import IconSpinner from '@/components/icons/IconSpinner.vue'
 import IconClose from '@/components/icons/IconClose.vue'
-import { storeToRefs } from 'pinia'
 
 const {
   searchQuery: storeSearchQuery,
@@ -51,14 +51,8 @@ onMounted(async () => {
     <div class="product-list__header">
       <h1 class="product-list__title">Products</h1>
       <div class="product-list__search-wrapper">
-        <input
-          v-model="searchQuery"
-          type="text"
-          placeholder="Search products..."
-          name="search"
-          class="product-list__search"
-          :class="{ 'product-list__search--with-icon': searchQuery }"
-        />
+        <input v-model="searchQuery" type="text" placeholder="Search products..." name="search"
+          class="product-list__search" :class="{ 'product-list__search--with-icon': searchQuery }" />
         <IconClose v-if="searchQuery" class="product-list__search-clear" @click="clearSearch" />
       </div>
     </div>
@@ -75,18 +69,10 @@ onMounted(async () => {
       No products found
     </div>
 
-    <VirtualScroller
-      v-else
-      :items="filteredProducts"
-      :item-height="ITEM_HEIGHT"
-      :container-height="CONTAINER_HEIGHT"
-    >
+    <VirtualScroller v-else :items="filteredProducts" :item-height="ITEM_HEIGHT" :container-height="CONTAINER_HEIGHT">
       <template #default="{ items, startIndex }">
-        <ProductCard
-          v-for="(product, index) in items as Product[]"
-          :key="`${startIndex + index}-${product.id}`"
-          :product="product"
-        />
+        <ProductCard v-for="(product, index) in items as Product[]" :key="`${startIndex + index}-${product.id}`"
+          :product="product" />
       </template>
     </VirtualScroller>
 

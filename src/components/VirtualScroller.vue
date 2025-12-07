@@ -56,15 +56,8 @@ watch(
 </script>
 
 <template>
-  <div
-    ref="containerRef"
-    class="virtual-scroller"
-    :style="{ height: `${containerHeight}px`, overflowY: 'auto' }"
-  >
-    <div
-      class="virtual-scroller__content"
-      :style="{ height: `${totalHeight}px`, position: 'relative' }"
-    >
+  <div ref="containerRef" class="virtual-scroller" :style="{ height: `${containerHeight}px`, overflowY: 'auto' }">
+    <div class="virtual-scroller__content" :style="{ height: `${totalHeight}px`, position: 'relative' }">
       <div class="virtual-scroller__items" :style="{ transform: `translateY(${offsetY}px)` }">
         <slot :items="visibleItems" :start-index="visibleStartIndex" />
       </div>
